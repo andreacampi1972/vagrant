@@ -1,0 +1,26 @@
+box: cdaf/WindowsServerStandard
+vm_name: vagrant-win2019
+
+mem_size: '2048'
+cpus: '2'
+#Number of latest octet of ip and latest three number of ssh port
+ip_number: '104'
+
+non_rotational: 'on'
+
+
+#disk1_size: 150
+#disk1_device: /dev/sdb
+#disk1_mountpoint: '/var/lib/docker'
+
+#disk2_size: 150
+#disk2_device: /dev/sdc
+#disk2_mountpoint: '/var/lib/docker'
+
+#disk3_size: 150
+#disk3_device: /dev/sdd
+#disk3_mountpoint: '/var/lib/docker'
+
+#disk4_size: 150
+#disk4_device: /dev/sde
+#disk4_mountpoint: '/var/lib/docker'
