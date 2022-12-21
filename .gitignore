@@ -87,4 +87,4 @@ tags
 # Persistent undo
 [._]*.un~
 
-.reg
+*.reg
