@@ -6,14 +6,6 @@
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 
-$script = <<SCRIPT
-. sc.exe config winrm start= auto
-iwr -useb https://chocolatey.org/install.ps1 | iex
-choco install putty.install -y
-choco install windirstat -y
-
-SCRIPT
-
 # Variables
 if File.exists?('config/ssh_connection.yml')
     ssh_connection      = YAML.load_file 'config/ssh_connection.yml'
