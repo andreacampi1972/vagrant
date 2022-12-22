@@ -1,8 +1,9 @@
 
 ssh_connection.yml
-04_private_customization.sh
+04_private_customization.*
 !vagrant-ol8/scripts/04_private_customization.sh
 
+*.reg
 # Key
 *.key
 *.pub
@@ -87,4 +88,3 @@ tags
 # Persistent undo
 [._]*.un~
 
-*.reg

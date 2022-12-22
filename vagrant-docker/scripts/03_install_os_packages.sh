@@ -1,3 +1,5 @@
+
+
 echo "******************************************************************************"
 echo "Install Docker." `date`
 echo "******************************************************************************"
@@ -17,11 +19,11 @@ echo "**************************************************************************
 echo "Create non-root docker user." `date`
 echo "******************************************************************************"
 groupadd -g 1042 docker_fg
-useradd -G docker_fg docker_user
+useradd -g docker_fg docker
 
 
-echo "docker_user  ALL=(ALL)  NOPASSWD: /usr/bin/docker" >> /etc/sudoers
-echo "alias docker=\"sudo /usr/bin/docker\"" >> /home/docker_user/.bash_profile
+echo "docker  ALL=(ALL)  NOPASSWD: /usr/bin/docker" >> /etc/sudoers
+echo "alias docker=\"sudo /usr/bin/docker\"" >> /home/docker/.bash_profile
 
 echo "******************************************************************************"
 echo "Configure docker-compose." `date`
@@ -35,5 +37,5 @@ curl -L -o /usr/local/bin/docker-compose \
      ) && \
 chmod +x /usr/local/bin/docker-compose
 
-echo "docker_user  ALL=(ALL)  NOPASSWD: /usr/local/bin/docker-compose" >> /etc/sudoers
-echo "alias docker-compose=\"sudo /usr/local/bin/docker-compose\"" >> /home/docker_user/.bash_profile
+echo "docker  ALL=(ALL)  NOPASSWD: /usr/local/bin/docker-compose" >> /etc/sudoers
+echo "alias docker-compose=\"sudo /usr/local/bin/docker-compose\"" >> /home/$docker_user/.bash_profile

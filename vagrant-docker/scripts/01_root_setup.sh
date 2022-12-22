@@ -16,8 +16,9 @@ echo "**************************************************************************
 
 dnf install -y oracle-epel-release-el8
 dnf install -y vim bind-utils git telnet nc lsof vim tar gpm unzip bzip2 dnf-utils p7zip p7zip-plugins 
-dnf install -y net-tools tcpdump wget sg3_utils rsync mailx
+dnf install -y net-tools tcpdump wget sg3_utils rsync mailx 
 
+dnf install -y libX11
 
 if [ -f /vagrant/scripts/03_install_os_packages.sh ]; then
     bash /vagrant/scripts/03_install_os_packages.sh

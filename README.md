@@ -57,7 +57,6 @@ If you don't know how to use Vagrant, you might want to read this introduction.
 
 192.168.56.102  vagrant-ubuntu      2103
 
-
 192.168.56.104  vagrant-win2019      2104
 
 ```
