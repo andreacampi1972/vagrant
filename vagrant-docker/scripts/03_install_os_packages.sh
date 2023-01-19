@@ -18,12 +18,12 @@ systemctl status docker.service
 echo "******************************************************************************"
 echo "Create non-root docker user." `date`
 echo "******************************************************************************"
-groupadd -g 1042 docker_fg
-useradd -g docker_fg docker
+
+useradd -u 1000 -g docker docker
 
 
-echo "docker  ALL=(ALL)  NOPASSWD: /usr/bin/docker" >> /etc/sudoers
-echo "alias docker=\"sudo /usr/bin/docker\"" >> /home/docker/.bash_profile
+#echo "docker  ALL=(ALL)  NOPASSWD: /usr/bin/docker" >> /etc/sudoers
+#echo "alias docker=\"sudo /usr/bin/docker\"" >> /home/docker/.bash_profile
 
 echo "******************************************************************************"
 echo "Configure docker-compose." `date`

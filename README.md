@@ -59,4 +59,7 @@ If you don't know how to use Vagrant, you might want to read this introduction.
 
 192.168.56.104  vagrant-win2019      2104
 
+192.168.56.105  vagrant-win11       2105
+
+192.168.56.106  vagrant-win2022      2106
 ```
