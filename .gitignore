@@ -3,6 +3,7 @@ ssh_connection.yml
 04_private_customization.*
 !vagrant-ol8/scripts/04_private_customization.sh
 
+!software/*
 *.reg
 # Key
 *.key
