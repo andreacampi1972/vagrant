@@ -49,7 +49,7 @@ If you don't know how to use Vagrant, you might want to read this introduction.
 
 ## IP MAPPING
 ```
-192.168.56.100  vagrant-ol8       2100
+192.168.56.100  vagrant-ol8         2100
 
 192.168.56.101  vagrant-ansible     2101
 
@@ -57,9 +57,15 @@ If you don't know how to use Vagrant, you might want to read this introduction.
 
 192.168.56.102  vagrant-ubuntu      2103
 
-192.168.56.104  vagrant-win2019      2104
+192.168.56.104  vagrant-win2019     2104
 
 192.168.56.105  vagrant-win11       2105
 
-192.168.56.106  vagrant-win2022      2106
+192.168.56.106  vagrant-win2022     2106
+
+192.168.56.107  vagrant-win2022     2107
+
+192.168.56.108  vagrant-ol7         2108
+
+192.168.56.109  vagrant-ol9         2109
 ```
