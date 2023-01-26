@@ -1,5 +1,5 @@
 box: StefanScherer/windows_2022 
-vm_name: win2022
+vm_name: vagrant-win2022
 
 mem_size: '4096'
 cpus: '4'
