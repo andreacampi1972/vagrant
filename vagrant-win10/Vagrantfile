@@ -1,0 +1,121 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+
+# Variables
+if File.exists?('config/ssh_connection.yml')
+    ssh_connection      = YAML.load_file 'config/ssh_connection.yml'
+    var_ssh_public_key  = ssh_connection['ssh_public_key']
+  end
+server              = YAML.load_file 'config/server_configuration.yml'
+
+var_ssh_port        = "2" + server['ip_number']
+var_public_ip       = "192.168.56." + server['ip_number']
+var_disk1_name      = "./" + server['vm_name'] + "-images1.vdi"
+var_disk1_size      = server['disk1_size']
+var_disk1_device    = server['disk1_device']
+var_disk1_mountpoint= server['disk1_mountpoint']
+
+var_disk2_name      = "./" + server['vm_name'] + "-images2.vdi"
+var_disk2_size      = server['disk2_size']
+var_disk2_device    = server['disk2_device']
+var_disk2_mountpoint= server['disk2_mountpoint']
+
+var_disk3_name      = "./" + server['vm_name'] + "-images3.vdi"
+var_disk3_size      = server['disk3_size']
+var_disk3_device    = server['disk3_device']
+var_disk3_mountpoint= server['disk3_mountpoint']
+
+var_disk4_name      = "./" + server['vm_name'] + "-images4.vdi"
+var_disk4_size      = server['disk4_size']
+var_disk4_device    = server['disk4_device']
+var_disk4_mountpoint= server['disk4_mountpoint']
+
+
+
+Vagrant.configure("2") do |config|
+  # The most common configuration options are documented and commented below.
+  # For a complete reference, please see the online documentation at
+  # https://docs.vagrantup.com.
+
+  # Every Vagrant development environment requires a box. You can search for
+  # boxes at https://vagrantcloud.com/search.
+  config.vm.synced_folder ".", "/vagrant", disabled: true  
+  config.vm.synced_folder "config", "/vagrant_config"
+  config.vm.synced_folder "software", "/vagrant_software"
+  
+  config.vm.define "windows" do |windows|
+    config.vm.box = server['box']
+    config.vm.communicator = "winrm"
+    
+    config.winrm.username = "vagrant"
+    config.winrm.password = "vagrant"
+    config.winrm.max_tries = 300
+    config.winrm.retry_delay = 2
+
+    config.vm.guest = :windows
+    config.vm.hostname = server['vm_name']
+    
+    config.vm.provision "shell", privileged: true, path: "scripts/00_root_setup.ps1"
+    config.vm.provision "shell", privileged: true, path: "scripts/03_install_os_packages.ps1"
+    #config.vm.provision "shell", inline: $script, privileged: true, powershell_elevated_interactive: true
+    #config.vm.provision "shell", privileged: true, path: "https://raw.githubusercontent.com/microsoft/azure_arc/main/azure_arc_servers_jumpstart/local/vagrant/windows/scripts/install_arc_agent.ps1"
+    
+    
+    
+    config.vm.network "forwarded_port", guest: 22, host: var_ssh_port, id: "ssh", auto_correct: true
+    config.vm.network "private_network", ip: var_public_ip
+
+    #windows.trigger.before :destroy do |trigger|
+      #trigger.warn = "Deleting Azure resource group"
+      #trigger.run_remote = {inline: "C:/runtime/delete_rg.ps1"}
+    #end
+  end
+
+  # Provider-specific configuration so you can fine-tune various
+  # backing providers for Vagrant. These expose provider-specific options.
+  # Example for VirtualBox:
+  #
+  config.vm.provider "virtualbox" do |vb|
+    # Display the VirtualBox GUI when booting the machine
+    #vb.gui = false 
+  
+    # Customize the amount of memory on the VM:
+    vb.memory = server['mem_size']
+    vb.cpus = server['cpus']
+    vb.name   = server['vm_name']
+
+     # View the documentation for the provider you are using for more
+  # information on available options.
+    unless var_disk1_size.nil? || var_disk1_size == 0
+      unless File.exist?(var_disk1_name)
+        vb.customize ['createhd', '--filename', var_disk1_name, '--size', var_disk1_size * 1024]
+      end
+      vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--nonrotational', var_non_rotational, '--medium', var_disk1_name]
+    end
+    unless var_disk2_size.nil? || var_disk2_size == 0
+        unless File.exist?(var_disk2_name)
+          vb.customize ['createhd', '--filename', var_disk2_name, '--size', var_disk2_size * 1024]
+        end
+        vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 2, '--device', 0, '--type', 'hdd', '--nonrotational', var_non_rotational, '--medium', var_disk2_name]
+    end
+    unless var_disk3_size.nil? || var_disk3_size == 0
+        unless File.exist?(var_disk3_name)
+          vb.customize ['createhd', '--filename', var_disk3_name, '--size', var_disk3_size * 1024]
+        end
+        vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 3, '--device', 0, '--type', 'hdd', '--nonrotational', var_non_rotational, '--medium', var_disk3_name]
+    end
+    unless var_disk4_size.nil? || var_disk4_size == 0
+        unless File.exist?(var_disk4_name)
+          vb.customize ['createhd', '--filename', var_disk4_name, '--size', var_disk4_size * 1024]
+        end
+        vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 4, '--device', 0, '--type', 'hdd', '--nonrotational', var_non_rotational, '--medium', var_disk4_name]
+    end
+  end
+
+ 
+end
