@@ -2,6 +2,7 @@ box: oraclebase/oracle-8
 box_url: https://oracle.github.io/vagrant-projects/boxes
 vm_name: vagrant-docker
 
+
 mem_size: '10096'
 cpus: '4'
 #Number of latest octet of ip and latest three number of ssh port
