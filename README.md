@@ -63,9 +63,9 @@ If you don't know how to use Vagrant, you might want to read this introduction.
 
 192.168.56.106  vagrant-win2022     2106
 
-192.168.56.107  vagrant-win2022     2107
-
-192.168.56.108  vagrant-ol7         2108
+192.168.56.107  vagrant-ol7         2107
 
 192.168.56.109  vagrant-ol9         2109
+
+192.168.56.110  vagrant-rhel7       2110
 ```

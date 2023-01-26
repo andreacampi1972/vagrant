@@ -9,6 +9,7 @@ end
 
 server              = YAML.load_file 'config/server_configuration.yml'
 var_box             = server['box']
+var_box_url         = server['box_url']
 var_ssh_port        = "2" + server['ip_number']
 var_vm_name         = server['vm_name']
 var_mem_size        = server['mem_size']
@@ -48,7 +49,9 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = var_box
-
+  unless config.vm.box_url.nil?
+    config.vm.box_url = "#{var_box_url}/#{var_box}.json"
+  end
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.

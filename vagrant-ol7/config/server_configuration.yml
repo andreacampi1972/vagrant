@@ -5,7 +5,7 @@ vm_name: vagrant-ol7
 mem_size: '1024'
 cpus: '1'
 #Number of latest octet of ip and latest three number of ssh port
-ip_number: '108'
+ip_number: '107'
 
 non_rotational: 'on'
 

@@ -1,4 +1,5 @@
 box: oraclebase/oracle-8
+box_url: https://oracle.github.io/vagrant-projects/boxes
 vm_name: vagrant-docker
 
 mem_size: '10096'
