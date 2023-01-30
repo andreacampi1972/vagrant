@@ -9,3 +9,7 @@ dnf install -y squid
 
 #Install vmware
 pip3.8 install requests pyVim PyVmomi pywinrm ansible oci-cli
+
+
+systemctl enable squid
+systemctl start squid
