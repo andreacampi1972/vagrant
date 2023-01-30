@@ -1,4 +1,4 @@
-# CENTOS Base OS
+# Windows 11 Base OS
 
 Base project for all future installation
 
