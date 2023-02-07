@@ -1,6 +1,10 @@
 box: oraclelinux/8
 box_url: https://oracle.github.io/vagrant-projects/boxes
+#Server Name
 vm_name: vagrant-ansible
+
+#Vagrant Password
+vagrant_password: vagrant
 
 mem_size: '1024'
 cpus: '1'

@@ -10,6 +10,7 @@ end
 server              = YAML.load_file 'config/server_configuration.yml'
 var_box             = server['box']
 var_box_url         = server['box_url']
+var_vagrant_pwd     = server['vagrant_password']
 var_ssh_port        = "2" + server['ip_number']
 var_vm_name         = server['vm_name']
 var_mem_size        = server['mem_size']
@@ -49,9 +50,12 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = var_box
-  unless config.vm.box_url.nil?
+  unless var_box_url.nil?
     config.vm.box_url = "#{var_box_url}/#{var_box}.json"
   end
+
+  config.vbguest.auto_update = true
+
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
@@ -93,6 +97,7 @@ Vagrant.configure("2") do |config|
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
+
   config.vm.provider "virtualbox" do |vb|
     vb.memory = var_mem_size
     vb.cpus   = var_cpus
@@ -130,16 +135,27 @@ Vagrant.configure("2") do |config|
 
  end
 
+#Force vagrant password 
+unless var_vagrant_pwd.nil? || var_vagrant_pwd ==0 
+env_var_vagrant_pwd = <<CMD
+echo "#{var_vagrant_pwd}" | passwd vagrant --stdin
+CMD
+end
+
+# Configure ssh_key
 unless var_ssh_public_key.nil? || var_ssh_public_key == 0
 ssh_pub_key = File.readlines("#{var_ssh_public_key}").first.strip
 env_var_cmd_ssh = <<CMD
 echo "#{ssh_pub_key}" >> /home/vagrant/.ssh/authorized_keys
 mkdir /root/.ssh
 echo "#{ssh_pub_key}" >> /root/.ssh/authorized_keys
+sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+systemctl restart sshd.service
 CMD
+
 end
 
-
+# Map disk
 unless var_disk1_name.nil? || var_disk1_name == 0
 env_var_cmd1 = <<CMD
 echo "export var_disk1_device=#{var_disk1_device}" | tee -a /etc/profile.d/vagrantstartup.sh
@@ -171,6 +187,7 @@ end
 script = <<SCRIPT
 hostnamectl set-hostname #{var_vm_name}
 #{env_var_cmd_ssh}
+#{env_var_vagrant_pwd}
 #{env_var_cmd1}
 #{env_var_cmd2}
 #{env_var_cmd3}
