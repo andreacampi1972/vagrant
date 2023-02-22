@@ -10,6 +10,8 @@ end
 server              = YAML.load_file 'config/server_configuration.yml'
 var_box             = server['box']
 var_box_url         = server['box_url']
+var_vagrant_pwd     = server['vagrant_password']
+var_vbg_auto_update = server['vbguest_auto_update']
 var_ssh_port        = "2" + server['ip_number']
 var_vm_name         = server['vm_name']
 var_mem_size        = server['mem_size']
@@ -52,6 +54,12 @@ Vagrant.configure("2") do |config|
   unless config.vm.box_url.nil?
     config.vm.box_url = "#{var_box_url}/#{var_box}.json"
   end
+  
+  # config.vbguest.auto_update default true
+  unless var_vbg_auto_update.nil? || var_vbg_auto_update == true
+    config.vbguest.auto_update = false
+  end
+  
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
@@ -61,7 +69,7 @@ Vagrant.configure("2") do |config|
   # within the machine from a port on the host machine and only allow access
   # via 127.0.0.1 to disable public access
   # config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
-
+  
   config.vm.network "forwarded_port", guest: 22, host: var_ssh_port, id: "ssh", auto_correct: true
 
   #config.vm.network "forwarded_port", guest: 80, host: 80
@@ -130,12 +138,20 @@ Vagrant.configure("2") do |config|
 
  end
 
+unless var_vagrant_pwd.nil?
+env_var_change_pwd = <<CMD
+echo "#{var_vagrant_pwd}" | passwd --stdin vagrant
+CMD
+end
+
 unless var_ssh_public_key.nil? || var_ssh_public_key == 0
 ssh_pub_key = File.readlines("#{var_ssh_public_key}").first.strip
 env_var_cmd_ssh = <<CMD
 echo "#{ssh_pub_key}" >> /home/vagrant/.ssh/authorized_keys
 mkdir /root/.ssh
 echo "#{ssh_pub_key}" >> /root/.ssh/authorized_keys
+sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config    
+systemctl restart sshd.service
 CMD
 end
 
@@ -170,6 +186,7 @@ end
 
 script = <<SCRIPT
 hostnamectl set-hostname #{var_vm_name}
+#{env_var_change_pwd}
 #{env_var_cmd_ssh}
 #{env_var_cmd1}
 #{env_var_cmd2}
