@@ -9,7 +9,7 @@ ip_number: '100'
 
 #Vagrant Password
 vagrant_password: vagrant
-vbguest_auto_update: false
+vbguest_auto_update: true
 
 
 non_rotational: 'on'
