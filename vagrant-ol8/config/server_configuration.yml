@@ -9,10 +9,14 @@ ip_number: '100'
 
 #Vagrant Password
 vagrant_password: vagrant
-vbguest_auto_update: true
+vbguest_auto_update: false
 
 
 non_rotational: 'on'
+
+disk1_size: 150
+disk1_device: /dev/sdb
+#disk1_mountpoint: '/var/lib/docker'
 
 
 #disk1_size: 150
