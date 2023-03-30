@@ -1,0 +1,5 @@
+C:\Users\g.olivieri\Documents\Vagrant\vagrant-vmware-desktop-main\vagrant-vmware-desktop-main\go_src\vagrant-vmware-utility\vagrant-vmware-utility.exe api
+
+C:\Users\g.olivieri\Documents\Projects\Vagrant\vagrant\vagrant-ansible-vmware vagrant up
+
+C:\Users\g.olivieri\Documents\Projects\Vagrant\vagrant\vagrant-ansible-vmware>vagrant ssh

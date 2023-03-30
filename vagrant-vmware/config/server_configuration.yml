@@ -1,0 +1,32 @@
+box: generic/oracle8
+#box: generic/centos8
+#box_url: https://oracle.github.io/vagrant-projects/boxes
+box_url:
+#Server Name
+vm_name: vagrant-ansible-vmware
+
+#Vagrant Password
+vagrant_password: vagrant
+
+mem_size: '2048'
+cpus: '2'
+#Number of latest octet of ip and latest three number of ssh port
+ip_number: '101'
+
+non_rotational: 'on' # SSD
+ 
+#disk1_size: 150
+#disk1_device: /dev/sdb
+#disk1_mountpoint: '/var/lib/docker'
+
+#disk2_size: 150
+#disk2_device: /dev/sdc
+#disk2_mountpoint: '/var/lib/docker'
+
+#disk3_size: 150
+#disk3_device: /dev/sdb
+#disk3_mountpoint: '/var/lib/docker'
+
+#disk4_size: 150
+#disk4_device: /dev/sdb
+#disk4_mountpoint: '/var/lib/docker'
