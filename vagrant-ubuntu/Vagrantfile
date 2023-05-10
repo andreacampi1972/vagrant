@@ -53,7 +53,7 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = var_box
-  unless config.vm.box_url.nil?
+  unless var_box_url.nil?
     config.vm.box_url = "#{var_box_url}/#{var_box}.json"
   end
   
