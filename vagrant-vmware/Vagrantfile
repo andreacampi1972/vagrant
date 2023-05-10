@@ -18,7 +18,7 @@ var_ssh_port        = "22" + server['ip_number']
 var_vm_name         = server['vm_name']
 var_mem_size        = server['mem_size']
 var_cpus            = server['cpus']
-var_public_ip       = "192.168.56." + server['ip_number']
+var_public_ip       = server['network'] + server['ip_number']
 var_netmask         = "24"
 var_non_rotational  = server['non_rotational']
 
@@ -51,13 +51,16 @@ Vagrant.configure("2") do |config|
   # For a complete reference, please see the online documentation at
   # https://docs.vagrantup.com.
 
+  
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = var_box
-  #unless var_box_url.nil?
-  #  config.vm.box_url = "#{var_box_url}/#{var_box}.json"
-  #end
+  unless var_box_url.nil?
+    config.vm.box_url = "#{var_box_url}/#{var_box}.json"
+  end
   
+
+
   # config.vbguest.auto_update default true
   unless var_vbg_auto_update.nil? || var_vbg_auto_update == true
     config.vbguest.auto_update = false
@@ -100,7 +103,6 @@ Vagrant.configure("2") do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  # config.vm.synced_folder "../data", "/vagrant_data"
   config.vm.synced_folder "config", "/vagrant_config"
   config.vm.synced_folder "software", "/vagrant_software"
   config.vm.synced_folder "scripts", "/vagrant/scripts"
@@ -109,52 +111,18 @@ Vagrant.configure("2") do |config|
   # Example for VmWare:
   #
   config.vm.provider "vmware_desktop" do |vb|
-    vb.gui = true
+    vb.gui = false
     vb.vmx["memsize"] = var_mem_size
     vb.vmx["numvcpus"] = var_cpus
     vb.vmx["ethernet1.present"] = "TRUE"
-    vb.vmx["ethernet1.connectionType"] = "hostonly"
+    vb.vmx["ethernet1.connectionType"] = "nat"
     vb.vmx["ethernet1.virtualDev"] = "e1000"
     vb.vmx["ethernet1.wakeOnPcktRcv"] = "FALSE"
     vb.vmx["ethernet1.addressType"] = "generated"
- #    vb.name   = var_vm_name
- #   vb.vmx["modifyvm", :id, "--natdnshostresolver1", "on"]
- #   vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
-
-#    vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', '0', '--nonrotational', var_non_rotational]
-
-    unless var_disk1_size.nil? || var_disk1_size == 0
-      unless File.exist?(var_disk1_name)
-#        vb.customize ['createhd', '--filename', var_disk1_name, '--size', var_disk1_size * 1024]
-         config.vm.disk :disk, name: var_disk1_name, size: var_disk1_size * 1024
-      end
-      #vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--nonrotational', var_non_rotational, '--medium', var_disk1_name]
-    end
-    unless var_disk2_size.nil? || var_disk2_size == 0
-        unless File.exist?(var_disk2_name)
-#          vb.customize ['createhd', '--filename', var_disk2_name, '--size', var_disk2_size * 1024]
-           config.vm.disk :disk, name: var_disk2_name, size: var_disk2_size * 1024
-        end
-#        vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 2, '--device', 0, '--type', 'hdd', '--nonrotational', var_non_rotational, '--medium', var_disk2_name]
-    end
-    unless var_disk3_size.nil? || var_disk3_size == 0
-        unless File.exist?(var_disk3_name)
-#          vb.customize ['createhd', '--filename', var_disk3_name, '--size', var_disk3_size * 1024]
-           config.vm.disk :disk, name: var_disk3_name, size: var_disk3_size * 1024
-        end
-#        vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 3, '--device', 0, '--type', 'hdd', '--nonrotational', var_non_rotational, '--medium', var_disk3_name]
-    end
-    unless var_disk4_size.nil? || var_disk4_size == 0
-        unless File.exist?(var_disk4_name)
-#          vb.customize ['createhd', '--filename', var_disk4_name, '--size', var_disk4_size * 1024]
-           config.vm.disk :disk, name: var_disk4_name, size: var_disk4_size * 1024
-        end
-#        vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 4, '--device', 0, '--type', 'hdd', '--nonrotational', var_non_rotational, '--medium', var_disk4_name]
-    end
-
 
  end
-#
+
+ #
 #configure password if defined
 unless var_vagrant_pwd.nil?
 env_var_change_pwd = <<CMD
