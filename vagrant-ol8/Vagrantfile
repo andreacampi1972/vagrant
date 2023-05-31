@@ -1,6 +1,6 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
-
+require 'yaml'
 # Variables
  
 # Configure user ssh_public_key

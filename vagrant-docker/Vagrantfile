@@ -1,13 +1,15 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
+require 'yaml'
 
 # Variables
+
  
 # Configure user ssh_public_key
-if File.exists?('config/ssh_connection.yml')
+#if File.exists?('config/ssh_connection.yml')
   ssh_connection      = YAML.load_file 'config/ssh_connection.yml'
   var_ssh_public_key  = ssh_connection['ssh_public_key']
-end
+#end
 
 server              = YAML.load_file 'config/server_configuration.yml'
 var_box             = server['box']
