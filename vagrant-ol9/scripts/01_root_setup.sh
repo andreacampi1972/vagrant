@@ -14,7 +14,7 @@ echo "**************************************************************************
 echo "Install base software" `date`
 echo "******************************************************************************"
 
-dnf install -y oracle-epel-release-el8
+dnf install -y oracle-epel-release-el9
 dnf install -y vim bind-utils git telnet nc lsof vim tar gpm unzip bzip2 dnf-utils p7zip p7zip-plugins 
 dnf install -y net-tools tcpdump wget sg3_utils rsync mailx
 
