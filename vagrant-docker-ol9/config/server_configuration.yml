@@ -1,0 +1,29 @@
+box: oraclelinux/9
+box_url: https://oracle.github.io/vagrant-projects/boxes
+vm_name: vagrant-docker-ol9
+
+
+mem_size: '10096'
+cpus: '4'
+#Number of latest octet of ip and latest three number of ssh port
+ip_number: '102'
+
+non_rotational: 'on'
+
+disk1_size: 150
+disk1_device: /dev/sdb
+disk1_mountpoint: '/var/lib/docker'
+
+
+
+#disk2_size: 150
+#disk2_device: /dev/sdc
+#disk2_mountpoint: '/var/lib/docker'
+
+#disk3_size: 150
+#disk3_device: /dev/sdb
+#disk3_mountpoint: '/var/lib/docker'
+
+#disk4_size: 150
+#disk4_device: /dev/sdb
+#disk4_mountpoint: '/var/lib/docker'
