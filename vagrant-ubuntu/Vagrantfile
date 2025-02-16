@@ -4,7 +4,7 @@
 # Variables
  
 # Configure user ssh_public_key
-if File.exists?('config/ssh_connection.yml')
+if File.exist?('config/ssh_connection.yml')
   ssh_connection      = YAML.load_file 'config/ssh_connection.yml'
   var_ssh_public_key  = ssh_connection['ssh_public_key']
 end

@@ -19,7 +19,7 @@ echo "**************************************************************************
 echo "Create non-root docker user." `date`
 echo "******************************************************************************"
 
-useradd -u 1000 -g docker docker
+useradd -u 2000 -g docker docker
 
 
 #echo "docker  ALL=(ALL)  NOPASSWD: /usr/bin/docker" >> /etc/sudoers
